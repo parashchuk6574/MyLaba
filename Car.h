@@ -1,13 +1,17 @@
-//
-// Created by Acer on 04.04.2024.
-//
-
 #ifndef LABA3_CAR_H
 #define LABA3_CAR_H
-
-
-class Car {
-
+#include <iostream>
+#include <string>
+class Car{
+protected:
+    std::string car = "No Car!";
+    std::string numberCar = "No Number Car!";
+    static std::string Cars;
+public:
+    void CreateCar();
+    void CreateNumberCar();
+    void CarPanel();
+    void ParkingCars();
 };
 
 

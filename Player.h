@@ -1,23 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <iostream>
-#include <string>
+#include "Car.h"
 
-class Player {
+class Player:public Car{
 private:
-    std::string car;
-    std::string numberCar;
     static int playerCount;
-
 public:
     Player();
     Player(const Player& other);
     Player(Player&& other) noexcept;
-    void CreateCar();
-    void CreateNumberCar();
-    void CarPanel();
-    void ParkingCars();
     std::string getCar();
     static int getPlayerCount();
 

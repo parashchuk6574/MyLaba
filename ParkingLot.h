@@ -2,8 +2,9 @@
 #define PARKINGLOT_H
 
 #include <vector>
+#include "Parking.h"
 
-class ParkingLot {
+class ParkingLot : public Parking{
 private:
     std::vector<bool> parkingSpaces;
 

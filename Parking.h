@@ -1,8 +1,6 @@
 #ifndef PARKING_H
 #define PARKING_H
 
-#include <iostream>
-#include <string>
 #include "Player.h"
 
 class Parking : public Player{

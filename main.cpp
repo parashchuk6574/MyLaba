@@ -1,158 +1,108 @@
 #include <iostream>
-#include <string>
 #include <vector>
-#include "Player.h"
-#include "Parking.h"
-#include "ParkingLot.h"
+#include <string>
+#include "Vehicle.h"
+#include "Motorcycle.h"
+#include "Car.h"
 using namespace std;
-string name;
-int numPark;
-int Name;
-int Sistem;
-
-vector<int> number_park{0};
-
-void print_line()
-{
-    for (int i = 0; i < 25; i++)
-        cout << "=";
-}
-
-void LoginPanel() {
-    do
-    {
-        print_line();
-        cout << "\nEnter the user!\n0-End the program\n1 - Player_1\n2 - Player_2\n Enter: ";
-        Name = 0;
-        cin >> Name;
-        if (Name == 0 || Name == 1 || Name == 2)
-            break;
-        else
-            cout << "You made a mistake!!!" << endl;
-    } while (true);
-}
-
-void SistemPanel() {
-    do
-    {
-        print_line();
-        cout << "\n1 - Change the name of the car\n"
-                "2 - Enter the vehicle number\n"
-                "3 - Display your car information\n"
-                "4 - Parking spaces\n"
-                "5 - Park you car\n"
-                "6 - Change user\n"
-                "=========================================================\n"
-                "//////Enter : ";
-        Sistem = 0;
-        cin >> Sistem;
-        if (Sistem == 0 || Sistem == 1 || Sistem == 2 || Sistem == 3 || Sistem == 4 || Sistem == 5 || Sistem == 6)
-        break;
-        else
-        cout << "\nYou made a mistake!!!" << endl;
-    } while (true);
-}
-
-Parking Park1;
-Parking Park2;
-Parking Park3;
-Parking Park4;
-
-void PanelParking() {
-    Park1.panel();
-    Park2.panel();
-    Park3.panel();
-    Park4.panel();
-}
-
-
-
-const int numParkingSpaces = 4;
-ParkingLot parkingLot(numParkingSpaces);
-
-void ParkingSistem() {
-    while (true) {
-        parkingLot.PrintParkingStatus();
-
-        int userChoice;
-        cout << "Please enter number park (1-4): ";
-        cin >> userChoice;
-
-        if (!parkingLot.parkCar(userChoice)) {
-            continue;
-        }
-        else
-            break;
-    }
-
-}
-Player Player1;
-Player Player2;
-void ExitPanelPlayers(){
-    string Exit;
-    cout << "Exit panel!\n";
-    cin >> Exit;
-}
-
-void GlobalFuncial(){
-    int value = 0;
-
-    LoginPanel();
-    while (value < 1) {
-        if (Name == 0){
-            value = 1;
-        }//Player1;
-        else if (Name == 1) {
-            SistemPanel();
-            if (Sistem == 1) {
-                Player1.CreateCar();
-            } else if (Sistem == 2) {
-                Player1.CreateNumberCar();
-            } else if (Sistem == 3) {
-                Player1.CarPanel();
-                ExitPanelPlayers();
-            }else if(Sistem == 4) {
-                PanelParking();
-            }else if(Sistem == 5){
-                Player1.getCar();
-                ParkingSistem();
-            }else if (Sistem == 6) {
-                LoginPanel();
-            } else {
-                cout << "Erorr! Plase Enter (1-4)!\n";
-                SistemPanel();
-            }
-
-
-            // Player2;
-        } else if (Name == 2) {
-            SistemPanel();
-            if (Sistem == 1) {
-                Player2.CreateCar();
-            } else if (Sistem == 2) {
-                Player2.CreateNumberCar();
-            } else if (Sistem == 3) {
-                Player2.CarPanel();
-                ExitPanelPlayers();
-            }else if(Sistem == 4){
-                PanelParking();
-            } else if(Sistem == 5){
-                Player2.ParkingCars();
-                ParkingSistem();
-            }else if (Sistem == 6) {
-                LoginPanel();
-            } else {
-                cout << "Erorr! Plase Enter (1-4)!\n";
-                SistemPanel();
-            }
-        } else {
-            cout << "Error! ";
-            LoginPanel();
-        }
-    }
-}
-
 int main() {
-    GlobalFuncial();
+    vector<Vehicle*> vehicles;
+
+    char choice;
+    do {
+        cout << "Menu:\n";
+        cout << "1. Add a car\n";
+        cout << "2. Add a motorcycle\n";
+        cout << "3. Display parking\n";
+        cout << "4. Delete a vehicle\n";
+        cout << "5. Exit\n";
+        cout << "Enter: ";
+
+        int option;
+        cin >> option;
+        int indexCars=0;
+        switch (option) {
+            case 1: {
+                string brand, model;
+                int year;
+
+                cout << "Enter brand of the car: ";
+                cin >> brand;
+                cin.ignore();
+                cout << "Enter model of the car: ";
+                getline(cin,model);
+                cout << "Enter year of the car: ";
+                cin >> year;
+
+                vehicles.push_back(new Car(brand, model, year));
+                cout << "Car added! " << endl;
+                break;
+            }
+            case 2: {
+                string brand, model;
+                int year;
+                cin.ignore();
+                cout << "Enter brand of the motorcycle: ";
+                getline(cin , brand);
+
+                cout << "Enter model of the motorcycle: ";
+                getline(cin , model);
+
+                cout << "Enter year of the motorcycle: ";
+                cin >> year;
+
+                vehicles.push_back(new Motorcycle(brand, model, year));
+                cout << "Motorcycle added!" << endl;
+                break;
+            }
+            case 3:
+                cout << "\nParking:\n";
+                for (const auto& vehicle : vehicles) {
+                    cout << "==================================================\n";
+                    vehicle->display();
+                    cout << "==================================================\n";
+                }
+                break;
+            case 4: {
+                if (vehicles.empty()) {
+                    cout << "No vehicles!" << endl;
+                    break;
+                }
+
+                cout << "Enter index of the vehicle to remove (0 to " << vehicles.size() - 1 << "): ";
+                int index;
+                cin >> index;
+                cin.ignore();
+
+                if (index >= 0 && index < vehicles.size()) {
+                    delete vehicles[index];
+                    vehicles.erase(vehicles.begin() + index);
+                    cout << "Vehicle removed successfully!" << endl;
+                }
+                else {
+                    cout << "Invalid index!" << endl;
+                }
+                break;
+            }
+            case 5:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid option!" << endl;
+                break;
+        }
+
+        if (option != 5) {
+            cout << "\nDo you want to continue? (y/n): ";
+            cin >> choice;
+        }
+
+    } while (choice == 'y' || choice == 'Y');
+
+    for (auto& vehicle : vehicles) {
+        delete vehicle;
+    }
+    vehicles.clear();
+
     return 0;
 }

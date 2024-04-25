@@ -1,18 +1,13 @@
-#ifndef LABA3_CAR_H
-#define LABA3_CAR_H
-#include <iostream>
-#include <string>
-class Car{
-protected:
-    std::string car = "No Car!";
-    std::string numberCar = "No Number Car!";
-    static std::string Cars;
+#ifndef CAR_H
+#define CAR_H
+
+#include "vehicle.h"
+
+class Car : public Vehicle {
 public:
-    void CreateCar();
-    void CreateNumberCar();
-    void CarPanel();
-    void ParkingCars();
+    Car(const std::string& brand, const std::string& model, int year);
+    std::string getTypeInEnglish() const override;
+    void showAdditionalInfo() const override;
 };
 
-
-#endif //LABA3_CAR_H
+#endif // CAR_H

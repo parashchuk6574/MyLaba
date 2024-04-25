@@ -1,23 +1,11 @@
-
-#include "Car.h"
-std::string Car::Cars;
-void Car::CreateCar() {
-    std::cout << "Please enter the name of the car:";
-    car.clear();
-    std::cin >> car;
+#include "car.h"
+using namespace std;
+Car::Car(const std::string& brand, const std::string& model, int year)
+        : Vehicle("Car", brand, model, year) {}
+string Car::getTypeInEnglish() const {
+    return "Car";
 }
 
-void Car::CreateNumberCar() {
-    std::cout << "Please enter the number of the car:";
-    numberCar.clear();
-    std::cin >> numberCar;
-}
-
-void Car::CarPanel() {
-    std::cout << "Car: " << car << std::endl
-              << "Number: " << numberCar << std::endl;
-}
-
-void Car::ParkingCars() {
-    Cars = car;
+void Car::showAdditionalInfo() const {
+    cout << "Additional info for Car." << endl;
 }

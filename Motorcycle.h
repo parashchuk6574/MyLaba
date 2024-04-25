@@ -1,14 +1,13 @@
-//
-// Created by Acer on 25.04.2024.
-//
+#ifndef MOTORCYCLE_H
+#define MOTORCYCLE_H
+using namespace std;
+#include "vehicle.h"
 
-#ifndef LABA3_MOTORCYCLE_H
-#define LABA3_MOTORCYCLE_H
-
-
-class Motorcycle {
-
+class Motorcycle : public Vehicle {
+public:
+    Motorcycle(const string& brand, const string& model, int year);
+    string getTypeInEnglish() const override;
+    void showAdditionalInfo() const override;
 };
 
-
-#endif //LABA3_MOTORCYCLE_H
+#endif // MOTORCYCLE_H
